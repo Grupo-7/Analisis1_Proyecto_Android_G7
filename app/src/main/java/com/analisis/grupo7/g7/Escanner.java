@@ -1,36 +1,28 @@
 package com.analisis.grupo7.g7;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class Escanner extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_escanner);
 
-        Button loginB = (Button) findViewById(R.id.login_button);
-        loginB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),EventSelect.class);
-                startActivity(intent);
-            }
-        });
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.getString("eventData")!=null)
+            Toast.makeText(getApplicationContext(), "Inicio correctamente [" + bundle.getString("eventData") + "]", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_escanner, menu);
         return true;
     }
 

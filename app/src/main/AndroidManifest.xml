@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EventSelect"
+            android:label="@string/title_activity_event_select"
+            android:parentActivityName=".LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.analisis.grupo7.g7.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".Escanner"
+            android:label="@string/title_activity_escanner"
+            android:parentActivityName=".EventSelect" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.analisis.grupo7.g7.EventSelect" />
+        </activity>
     </application>
 
 </manifest>
