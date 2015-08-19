@@ -79,4 +79,9 @@ public class EventSelect extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public boolean validarEvento(String evento){
+        return false;
+    }
+
 }
