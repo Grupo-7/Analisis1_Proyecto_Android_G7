@@ -29,9 +29,14 @@ public class EventSelect extends ActionBarActivity {
         initB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Escanner.class);
-                intent.putExtra("eventData",evento_seleccionado);
-                startActivity(intent);
+
+                if(validarEvento(evento_seleccionado)){
+                    Intent intent = new Intent(getApplicationContext(),Escanner.class);
+                    intent.putExtra("eventData",evento_seleccionado);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Primero debe seleccionar un evento.",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

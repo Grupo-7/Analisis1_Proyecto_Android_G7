@@ -8,6 +8,7 @@
     <string name="username">Usuario:</string>
     <string name="pass">Contraseña:</string>
     <string name="init">Iniciar</string>
+    <string name="terminate">Finalizar</string>
     <string name="title_activity_escanner">Escanner</string>
     <string name="scan">Escaneando carnets (coming soon)</string>
 </resources>

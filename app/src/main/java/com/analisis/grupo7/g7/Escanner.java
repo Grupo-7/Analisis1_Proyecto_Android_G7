@@ -1,9 +1,13 @@
 package com.analisis.grupo7.g7;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -17,6 +21,30 @@ public class Escanner extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("eventData")!=null)
             Toast.makeText(getApplicationContext(), "Inicio correctamente [" + bundle.getString("eventData") + "]", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getApplicationContext(), "Ocurrio un error.", Toast.LENGTH_LONG).show();
+    }
+
+    public void open(View view){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Esta seguro que desea finalizar la toma de asistencia?");
+
+        alertDialogBuilder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(getApplicationContext(),"Toma de asistencia finalizada con exito.",Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override
