@@ -26,13 +26,10 @@ public class EventSelect extends ActionBarActivity {
         evento_seleccionado = "";
 
         Button initB = (Button)findViewById(R.id.start_scan);
-        initB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Escanner.class);
-                intent.putExtra("eventData",evento_seleccionado);
-                startActivity(intent);
-            }
+        initB.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),Escanner.class);
+            intent.putExtra("eventData",evento_seleccionado);
+            startActivity(intent);
         });
 
         lista_eventos = (ListView)findViewById(R.id.listaEventos);
@@ -48,13 +45,10 @@ public class EventSelect extends ActionBarActivity {
 
         lista_eventos.setAdapter(adapter);
 
-        this.lista_eventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = (String)lista_eventos.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(),item,Toast.LENGTH_SHORT).show();
-                evento_seleccionado = item;
-            }
+        this.lista_eventos.setOnItemClickListener((parent, view, position, id) -> {
+            String item = (String)lista_eventos.getItemAtPosition(position);
+            Toast.makeText(getApplicationContext(),item,Toast.LENGTH_SHORT).show();
+            evento_seleccionado = item;
         });
     }
 
@@ -81,7 +75,7 @@ public class EventSelect extends ActionBarActivity {
     }
 
     public boolean validarEvento(String evento){
-        return false;
+        return !evento.equals("");
     }
 
 }
