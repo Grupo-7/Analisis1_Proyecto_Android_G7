@@ -47,7 +47,7 @@ public class EventSelect extends ActionBarActivity {
                 "Evento3"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1,
+                R.layout.list_event_layout,
                 android.R.id.text1,
                 values);
 
