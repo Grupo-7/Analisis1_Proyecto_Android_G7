@@ -31,7 +31,7 @@ public class Escanner extends ActionBarActivity {
         alertDialogBuilder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(getApplicationContext(),"Toma de asistencia finalizada con exito.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Toma de asistencia finalizada con exito.", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -66,5 +66,13 @@ public class Escanner extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean validarCarnet(String carnet){
+        return true;
+    }
+
+    public boolean validarLargoCarnet(String carnet){
+        return true;
     }
 }
