@@ -69,10 +69,16 @@ public class Escanner extends ActionBarActivity {
     }
 
     public boolean validarCarnet(String carnet){
-        return true;
+        try{
+            Long.parseLong(carnet);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     public boolean validarLargoCarnet(String carnet){
-        return true;
+        return carnet.length()==9;
     }
 }
