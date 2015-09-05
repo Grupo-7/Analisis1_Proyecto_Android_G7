@@ -11,4 +11,8 @@
     <string name="terminate">Finalizar</string>
     <string name="title_activity_escanner">Escanner</string>
     <string name="scan">Escaneando carnets (coming soon)</string>
+    <string name="manual">Ingreso manual</string>
+    <string name="carnet">Carnet:</string>
+    <string name="enviar">Enviar asistencia</string>
+    <string name="cancel">Cancelar</string>
 </resources>

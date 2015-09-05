@@ -16,8 +16,19 @@
         android:text="@string/terminate"
         android:id="@+id/terminateB"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:onClick="open"/>
+        android:onClick="open"
+        android:layout_alignEnd="@+id/aux_label"
+        android:layout_alignTop="@+id/ingresoManualB" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manual"
+        android:id="@+id/ingresoManualB"
+        android:onClick="ingresoManual"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/terminateB" />
 
 </RelativeLayout>

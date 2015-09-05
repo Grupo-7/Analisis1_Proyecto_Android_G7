@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/carnet"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_carnet"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView3"
+        android:paddingRight="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/pass"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/dialog_carnet"
+        android:layout_alignParentStart="true"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_pass"
+        android:inputType="textPassword"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_alignEnd="@+id/dialog_carnet"
+        android:layout_toEndOf="@+id/textView4"
+        android:paddingRight="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:id="@+id/dialog_cancelB"
+        android:layout_below="@+id/dialog_pass"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/dialog_sendB" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enviar"
+        android:id="@+id/dialog_sendB"
+        android:layout_alignTop="@+id/dialog_cancelB"
+        android:layout_alignStart="@+id/dialog_pass"
+        android:layout_alignEnd="@+id/dialog_carnet" />
+
+</RelativeLayout>

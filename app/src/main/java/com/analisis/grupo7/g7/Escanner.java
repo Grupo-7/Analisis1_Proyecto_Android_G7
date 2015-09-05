@@ -3,6 +3,7 @@ package com.analisis.grupo7.g7;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,9 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 
-import org.w3c.dom.Text;
+import org.apache.http.client.HttpClient;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class Escanner extends ActionBarActivity {
 
@@ -95,7 +100,11 @@ public class Escanner extends ActionBarActivity {
 
                 if(fullValidar(carnetT.getText().toString())){
                     if(passT.getText().toString().equals("admin")){
-                        Toast.makeText(getApplicationContext(),carnetT.getText().toString() + passT.getText().toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Enviando datos...",Toast.LENGTH_SHORT).show();
+                        //AsyncTask
+                        new EnviarAsistencia(carnetT.getText().toString()).execute();
+                        dialog.dismiss();
+
                     }else{
                         Toast.makeText(getApplicationContext(),"Contraseña no valida!",Toast.LENGTH_SHORT).show();
                     }
@@ -125,5 +134,30 @@ public class Escanner extends ActionBarActivity {
 
     public boolean validarLargoCarnet(String carnet){
         return carnet.length()==9;
+    }
+
+    private class EnviarAsistencia extends AsyncTask<String,Void,String>{
+
+        private String carnet;
+
+        public EnviarAsistencia(String carnet) {
+            this.carnet = carnet;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            URL url;
+            BufferedReader reader = null;
+            try{
+                url = new URL("http://carlosrodf.koding.io/android?op=asistir&evento=7&carnet="+this.carnet);
+                URLConnection conn = url.openConnection();
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                reader.readLine();
+                reader.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
