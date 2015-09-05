@@ -1,14 +1,19 @@
 package com.analisis.grupo7.g7;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
+import org.w3c.dom.Text;
 
 public class Escanner extends ActionBarActivity {
 
@@ -66,6 +71,46 @@ public class Escanner extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ingresoManual(View view){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custom_dialog_layout);
+        dialog.setTitle("Ingreso manual");
+
+        Button cancelB = (Button)dialog.findViewById(R.id.dialog_cancelB);
+        cancelB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button sendB = (Button)dialog.findViewById(R.id.dialog_sendB);
+        sendB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView carnetT = (TextView)dialog.findViewById(R.id.dialog_carnet);
+                TextView passT = (TextView)dialog.findViewById(R.id.dialog_pass);
+
+                if(fullValidar(carnetT.getText().toString())){
+                    if(passT.getText().toString().equals("admin")){
+                        Toast.makeText(getApplicationContext(),carnetT.getText().toString() + passT.getText().toString(),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Contraseña no valida!",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(),"Carnet no valido!",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        dialog.show();
+    }
+
+    public boolean fullValidar(String carnet){
+        return validarCarnet(carnet) && validarLargoCarnet(carnet);
     }
 
     public boolean validarCarnet(String carnet){
