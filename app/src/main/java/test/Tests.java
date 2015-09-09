@@ -55,4 +55,11 @@ public class Tests extends InstrumentationTestCase{
         assertEquals(reality,expected);
     }
 
+    public void test_validarCarnet_quitarCaracterExtra() throws Exception{
+        Escanner escanner = new Escanner();
+        final String reality = escanner.quitarExtra("2012129471");
+        final String expected = "201212947";
+        assertEquals(reality,expected);
+    }
+
 }

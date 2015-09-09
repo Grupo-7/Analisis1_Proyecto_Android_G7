@@ -136,6 +136,10 @@ public class Escanner extends ActionBarActivity {
         return carnet.length()==9;
     }
 
+    public String quitarExtra(String carnet){
+        return carnet.substring(0,9);
+    }
+
     private class EnviarAsistencia extends AsyncTask<String,Void,String>{
 
         private String carnet;
