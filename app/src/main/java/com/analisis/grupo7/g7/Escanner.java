@@ -20,12 +20,19 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class Escanner extends ActionBarActivity {
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
+
+public class Escanner extends ActionBarActivity implements ZBarScannerView.ResultHandler{
+
+    private ZBarScannerView mScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_escanner);
+
+        mScannerView = new ZBarScannerView(this);
+        setContentView(mScannerView);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("eventData")!=null)
@@ -34,7 +41,7 @@ public class Escanner extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Ocurrio un error.", Toast.LENGTH_LONG).show();
     }
 
-    public void open(View view){
+    public void open(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Esta seguro que desea finalizar la toma de asistencia?");
 
@@ -71,14 +78,49 @@ public class Escanner extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_finalizar) {
+            open();
+            return true;
+        }
+        else if(id == R.id.action_ingresomanual){
+            ingresoManual();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void ingresoManual(View view){
+    @Override
+    public void onResume() {
+        super.onResume();
+        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
+        mScannerView.startCamera();          // Start camera on resume
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mScannerView.stopCamera();           // Stop camera on pause
+    }
+
+    @Override
+    public void handleResult(Result rawResult){
+        String codigo = rawResult.getContents();
+        codigo=quitarExtra(codigo);
+        //Toast.makeText(getApplicationContext(),codigo,Toast.LENGTH_LONG).show();
+        if(fullValidar(codigo)){
+            //AsyncTask
+            new EnviarAsistencia(codigo).execute();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Codigo invalido - " + codigo,Toast.LENGTH_SHORT).show();
+        }
+
+        mScannerView.setResultHandler(this);
+        mScannerView.startCamera();
+    }
+
+    public void ingresoManual(){
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_dialog_layout);
         dialog.setTitle("Ingreso manual");
