@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -142,13 +144,12 @@ public class Escanner extends ActionBarActivity implements ZBarScannerView.Resul
 
                 if(fullValidar(carnetT.getText().toString())){
                     if(passT.getText().toString().equals("admin")){
-                        Toast.makeText(getApplicationContext(),"Enviando datos...",Toast.LENGTH_SHORT).show();
                         //AsyncTask
                         new EnviarAsistencia(carnetT.getText().toString()).execute();
                         dialog.dismiss();
 
                     }else{
-                        Toast.makeText(getApplicationContext(),"Contraseña no valida!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Contrasena no valida!",Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),"Carnet no valido!",Toast.LENGTH_SHORT).show();
@@ -185,25 +186,38 @@ public class Escanner extends ActionBarActivity implements ZBarScannerView.Resul
     private class EnviarAsistencia extends AsyncTask<String,Void,String>{
 
         private String carnet;
+        private String mensaje;
 
         public EnviarAsistencia(String carnet) {
             this.carnet = carnet;
+            this.mensaje = "";
         }
 
         @Override
         protected String doInBackground(String... params) {
             URL url;
             BufferedReader reader = null;
+
             try{
                 url = new URL("http://carlosrodf.koding.io/android?op=asistir&evento=7&carnet="+this.carnet);
                 URLConnection conn = url.openConnection();
                 reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                reader.readLine();
+
+                String tmp = reader.readLine();
+                tmp = tmp.replace("&quot;","\'");
+                JSONObject obj = new JSONObject(tmp);
+                this.mensaje = obj.getString("response");
+
                 reader.close();
             }catch (Exception e){
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(getApplicationContext(),this.mensaje,Toast.LENGTH_SHORT).show();
         }
     }
 }
