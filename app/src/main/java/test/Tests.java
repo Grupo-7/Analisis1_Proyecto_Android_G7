@@ -4,6 +4,7 @@ import android.test.InstrumentationTestCase;
 
 import com.analisis.grupo7.g7.Escanner;
 import com.analisis.grupo7.g7.EventSelect;
+import com.analisis.grupo7.g7.LoginActivity;
 
 public class Tests extends InstrumentationTestCase{
 
@@ -59,6 +60,20 @@ public class Tests extends InstrumentationTestCase{
         Escanner escanner = new Escanner();
         final String reality = escanner.quitarExtra("2012129471");
         final String expected = "201212947";
+        assertEquals(reality,expected);
+    }
+
+    public void test_validarDatosLoginNoNulos_exitoso() throws Exception{
+        LoginActivity login = new LoginActivity();
+        final boolean reality = login.validarVacios("201212947", "passw");
+        final boolean expected = true;
+        assertEquals(reality,expected);
+    }
+
+    public void test_validarDatosLoginNoNulos_falla() throws Exception{
+        LoginActivity login = new LoginActivity();
+        final boolean reality = login.validarVacios("201212947","");
+        final boolean expected = false;
         assertEquals(reality,expected);
     }
 

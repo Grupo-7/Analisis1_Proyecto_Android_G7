@@ -48,4 +48,9 @@ public class LoginActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public boolean validarVacios(String user, String pass){
+        return true;
+    }
+
 }
