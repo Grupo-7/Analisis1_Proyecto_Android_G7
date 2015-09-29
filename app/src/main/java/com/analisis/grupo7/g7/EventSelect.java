@@ -18,10 +18,14 @@ public class EventSelect extends ActionBarActivity {
     ListView lista_eventos;
     String evento_seleccionado;
 
+    private String carnet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_select);
+
+        carnet = getIntent().getStringExtra("carnet");
 
         evento_seleccionado = "";
 
@@ -33,6 +37,7 @@ public class EventSelect extends ActionBarActivity {
                 if(validarEvento(evento_seleccionado)){
                     Intent intent = new Intent(getApplicationContext(),Escanner.class);
                     intent.putExtra("eventData",evento_seleccionado);
+                    intent.putExtra("carnet",carnet);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),"Primero debe seleccionar un evento.",Toast.LENGTH_SHORT).show();

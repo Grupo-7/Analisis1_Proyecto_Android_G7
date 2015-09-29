@@ -114,7 +114,14 @@ public class LoginActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+            //FALTA COMUNICACION CON LO QUE RODRIGO NO HA HECHO -.-
+            if(s.equals("valido")){
+                Intent intent = new Intent(getApplicationContext(),EventSelect.class);
+                intent.putExtra("carnet",this.carnet);
+                startActivity(intent);
+            }else{
+                Toast.makeText(getApplicationContext(),"No valido",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

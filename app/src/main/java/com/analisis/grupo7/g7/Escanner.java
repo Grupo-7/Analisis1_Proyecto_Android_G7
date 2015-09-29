@@ -28,10 +28,13 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
 public class Escanner extends ActionBarActivity implements ZBarScannerView.ResultHandler{
 
     private ZBarScannerView mScannerView;
+    String carnet_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        carnet_admin = getIntent().getStringExtra("carnet");
 
         mScannerView = new ZBarScannerView(this);
         setContentView(mScannerView);
