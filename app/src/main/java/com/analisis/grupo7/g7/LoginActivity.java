@@ -40,7 +40,6 @@ public class LoginActivity extends ActionBarActivity {
                 String usuario = usernameT.getText().toString();
                 String pw = passwT.getText().toString();
                 if(validarVacios(usuario,pw)){
-                    Toast.makeText(getApplicationContext(),"Correcto",Toast.LENGTH_SHORT).show();
                     new Loggearse(usuario,pw).execute();
                 }else{
                     Toast.makeText(getApplicationContext(),"Debe ingresar todos los datos",Toast.LENGTH_SHORT).show();
@@ -75,7 +74,7 @@ public class LoginActivity extends ActionBarActivity {
         return !(user.equals("")||pass.equals(""));
     }
 
-    private class Loggearse extends AsyncTask<String,Void,String>{
+    private class Loggearse extends AsyncTask<String,Void,JSONObject>{
 
         private String carnet;
         private String pass;
@@ -91,36 +90,40 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected JSONObject doInBackground(String... params) {
             URL url;
             BufferedReader reader = null;
 
             try{
-                url = new URL("http://carlosrodf.koding.io/android?op=pendiente");
+                url = new URL("http://carlosrodf.koding.io/android?op=login&carnet="+this.carnet+"&password="+this.pass);
                 URLConnection conn = url.openConnection();
                 reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
                 String tmp = reader.readLine();
                 tmp = tmp.replace("&quot;","\'");
                 JSONObject obj = new JSONObject(tmp);
-                Log.d("MSG","Servidor encontrado!");
+                Log.d("MSG",tmp);
+                return obj;
 
             }catch (Exception e){
                 e.printStackTrace();
                 Log.d("MSG","No se encontro el sevidor");
+                return null;
             }
-            return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            //FALTA COMUNICACION CON LO QUE RODRIGO NO HA HECHO -.-
-            if(s.equals("valido")){
-                Intent intent = new Intent(getApplicationContext(),EventSelect.class);
-                intent.putExtra("carnet",this.carnet);
-                startActivity(intent);
-            }else{
-                Toast.makeText(getApplicationContext(),"No valido",Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(JSONObject json) {
+            try{
+                if(json.getInt("codigo") == 1){
+                    Intent intent = new Intent(getApplicationContext(),EventSelect.class);
+                    intent.putExtra("carnet",this.carnet);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),json.getString("response"),Toast.LENGTH_SHORT).show();
+                }
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(),"Ocurrio un error inesperado...",Toast.LENGTH_SHORT).show();
             }
         }
     }
